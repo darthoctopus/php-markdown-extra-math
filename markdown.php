@@ -245,6 +245,9 @@ class Markdown_Parser {
 	var $predef_urls = array();
 	var $predef_titles = array();
 
+	function __construct() {
+		$this->Markdown_Parser();
+	}
 
 	function Markdown_Parser() {
 	#
@@ -1206,7 +1209,7 @@ class Markdown_Parser {
 		'***' => '(?<=\S|^)(?<!\*)\*\*\*(?!\*)',
 		'___' => '(?<=\S|^)(?<!_)___(?!_)',
 		);
-	var $em_strong_prepared_relist;
+	var $em_strong_prepared_relist = array();
 	
 	function prepareItalicsAndBold() {
 	#
@@ -1236,7 +1239,7 @@ class Markdown_Parser {
 		$em = '';
 		$strong = '';
 		$tree_char_em = false;
-		
+
 		while (1) {
 			#
 			# Get prepared regular expression for seraching emphasis tokens
@@ -1762,6 +1765,9 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 	# Predefined abbreviations.
 	var $predef_abbr = array();
 
+	function __construct() {
+		$this->MarkdownExtra_Parser();
+	}
 
 	function MarkdownExtra_Parser() {
 	#
