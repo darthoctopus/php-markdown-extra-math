@@ -895,8 +895,10 @@ class Markdown_Parser {
 		$result = "<img src=\"$url\" alt=\"$alt_text\"";
 		if (isset($title)) {
 			$title = $this->encodeAttribute($title);
-			$result .=  " title=\"$title\""; # $title already quoted
+		} else {
+			$title = $this->encodeAttribute($alt_text);
 		}
+		$result .=  " title=\"$title\""; # $title already quoted
 		$result .= $this->empty_element_suffix;
 
 		return $this->hashPart($result);
@@ -1133,7 +1135,7 @@ class Markdown_Parser {
 		# trim leading newlines and trailing newlines
 		$codeblock = preg_replace('/\A\n+|\n+\z/', '', $codeblock);
 
-		$codeblock = "<pre><code>$codeblock\n</code></pre>";
+		$codeblock = "<pre><code class='prettyprint'>$codeblock\n</code></pre>";
 		return "\n\n".$this->hashBlock($codeblock)."\n\n";
 	}
 
@@ -1171,7 +1173,7 @@ class Markdown_Parser {
 	# Create a code span markup for $code. Called from handleSpanToken.
 	#
 		$code = htmlspecialchars(trim($code), ENT_NOQUOTES);
-		return $this->hashPart("<code>$code</code>");
+		return $this->hashPart("<code class='prettyprint'>$code</code>");
 	}
 
   function makeInlineMath($tex) {
@@ -2645,7 +2647,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 		$codeblock = htmlspecialchars($codeblock, ENT_NOQUOTES);
 		$codeblock = preg_replace_callback('/^\n+/',
 			array(&$this, '_doFencedCodeBlocks_newlines'), $codeblock);
-		$codeblock = "<pre><code>$codeblock</code></pre>";
+		$codeblock = "<pre><code class='prettyprint'>$codeblock</code></pre>";
 		return "\n\n".$this->hashBlock($codeblock)."\n\n";
 	}
 	function _doFencedCodeBlocks_newlines($matches) {
